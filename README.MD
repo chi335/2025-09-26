@@ -200,6 +200,81 @@ int main() {
 ```
 A[i][j] → B[j][N-1-i]
 ```
+---
+
+### 💻 예제 코드 (도형 이동 및 90도 회전)
+
+이 예제는 간단한 3x3 크기의 도형을 정의하고, 이를 **90도 시계 방향**으로 회전시키는 `rotate_shape_90` 함수를 보여줍니다. 키보드 입력 처리는 복잡하므로, 여기서는 회전 로직에 중점을 둡니다.
+
+```
+#include <stdio.h>
+
+#define N 3 // 도형을 담을 행렬의 크기 (N x N)
+
+// 초기 도형 (3x3 행렬)
+int shape[N][N] = {
+    {1, 1, 0},
+    {1, 0, 0},
+    {0, 0, 0}
+};
+
+// 도형을 화면에 그리는 함수
+void draw_shape(int s[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (s[i][j] == 1) {
+                printf("■ ");
+            } else {
+                printf("  "); // 공백 두 칸
+            }
+        }
+        printf("\n");
+    }
+}
+
+// 90도 시계 방향으로 도형을 회전시키는 함수
+void rotate_shape_90(int s[N][N]) {
+    int temp[N][N]; // 회전된 도형을 임시로 저장할 배열
+
+    // 회전 원리: A[i][j] → B[j][N-1-i]
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            // 기존 (i, j)의 값을 새로운 (j, N-1-i) 위치에 저장
+            temp[j][N - 1 - i] = s[i][j];
+        }
+    }
+
+    // 회전된 결과를 원본 배열에 복사
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            s[i][j] = temp[i][j];
+        }
+    }
+}
+
+int main() {
+    printf("--- 초기 도형 ---\n");
+    draw_shape(shape);
+
+    // 회전 실행
+    rotate_shape_90(shape);
+    printf("\n--- 90도 회전 후 ---\n");
+    draw_shape(shape);
+
+    // 한 번 더 회전 실행
+    rotate_shape_90(shape);
+    printf("\n--- 180도 회전 후 ---\n");
+    draw_shape(shape);
+    
+    // (참고: move_shape() 함수는 키보드 입력을 받아야 하므로 여기서는 생략합니다.)
+
+    return 0;
+}
+```
+---
+
+
+
 ### 📜 주요 함수
 
 | 함수명 | 설명 | 기능 |
